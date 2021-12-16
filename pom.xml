@@ -16,7 +16,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <name>works</name>
-    <description>中移在线-亚信工作量上报系统</description>
+    <description>工作量上报系统</description>
 
     <properties>
         <java.version>1.8</java.version>

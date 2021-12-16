@@ -37,8 +37,7 @@ public class SwaggerConfig {
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("中移在线-亚信工作量上报系统").description("接口文档").termsOfServiceUrl("")
-				.version("1.0.0").build();
+		return new ApiInfoBuilder().title("工作量上报系统").description("接口文档").termsOfServiceUrl("").version("1.0.0").build();
 	}
 
 }
