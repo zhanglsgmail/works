@@ -100,7 +100,7 @@ spring:
 
 # 日志
 logging:
-  config: classpath:conf/logback-spring-dev.xml
+  config: classpath:conf/logback-dev.xml
 
 ---
 server:
@@ -166,4 +166,4 @@ spring:
 
 # 日志
 logging:
-  config: classpath:conf/logback-spring-prod.xml
+  config: classpath:conf/logback-prod.xml
