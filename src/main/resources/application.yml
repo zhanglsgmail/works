@@ -36,6 +36,13 @@ spring:
   cache:
     type: redis
 
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    mode: HTML5
+    prefix: classpath:/templates/
+    suffix: .html
+
 ---
 server:
   port: 8082
@@ -104,7 +111,7 @@ logging:
 
 ---
 server:
-  port: 8080
+  port: 8888
 spring:
   config:
     activate:

@@ -53,8 +53,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 		try {
 			getSubject(request, response).login(bearerToken);
 		} catch (IncorrectCredentialsException e) {
-			ServletUtils.renderString((HttpServletResponse) response,
-					JSONUtil.toJsonStr(Result.error(ErrorState.TOKEN_INVALID)));
+			ServletUtils.renderString((HttpServletResponse) response, JSONUtil.toJsonStr(Result.error(ErrorState.TOKEN_INVALID)));
 			return false;
 		}
 		// 如果没有抛出异常则代表登入成功，返回true

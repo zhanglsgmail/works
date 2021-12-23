@@ -44,6 +44,9 @@ public enum ErrorState {
 	/** 刷新令牌无效 */
 	REFRESH_TOKEN_INVALID(1010, "认证过期,请重新登录"),
 
+	/** 用户已登陆，请不要重复登陆 */
+	USER_HAS_LOGIN(1011, "用户已登陆，请不要重复登陆"),
+
 	;
 
 	private final Integer code;

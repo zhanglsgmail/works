@@ -7,6 +7,7 @@ import com.asiainfo.ai.framework.web.controller.BaseController;
 import com.asiainfo.ai.framework.web.domain.Result;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
+import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import javax.validation.constraints.NotEmpty;
 
 /**
  * 登陆相关操作
+ * /login 下的接口都可以 = 无需认证（登录）可以访问
  *
  * @author zhangls
  */
@@ -27,7 +29,14 @@ public class LoginController extends BaseController {
 
     private final LoginService loginService;
 
-    @RequestLimit
+    /**
+     * 1、接口60秒只允许调用1次
+     * 2、验证码5分钟失效
+     * 3、根据手机号查询是否登陆，已登陆，就不发验证码了
+     * @param phone
+     * @return
+     */
+    @RequestLimit(second = 60)
     @ApiOperation(value = "发送登录验证码")
     @ApiImplicitParam(name = "phone", value = "手机号", required = true, paramType = "query", dataTypeClass = String.class)
     @GetMapping("/code")
@@ -55,6 +64,7 @@ public class LoginController extends BaseController {
         return loginService.modifyPassword(phone, code, password);
     }
 
+    @RequestLimit
     @ApiOperation("密码登录")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "phone", value = "手机号", required = true, paramType = "query", dataTypeClass = String.class),

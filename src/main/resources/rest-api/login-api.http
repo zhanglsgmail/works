@@ -1,0 +1,14 @@
+###
+### 发送登录验证码
+GET http://{{host}}:{{port}}/login/code?phone=18939242600
+Accept: application/json
+
+
+###
+POST http://{{host}}:{{port}}/login/password
+Content-Type: application/x-www-form-urlencoded
+
+phone=18939242600&password=123456
+
+### 发送修改密码验证码
+GET http://{{host}}:{{port}}/login/modify-pwd-code

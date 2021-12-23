@@ -51,12 +51,28 @@ public class LoginService {
     private final TokenService tokenService;
 
     /**
+     * 根据用户名查询是否已登陆
+     *
+     * @param phone
+     * @return
+     */
+    public Boolean isLogin(String phone) {
+        // 判断用户登陆信息Key是否存在 用户登陆KEY 7天失效
+        return stringRedisTemplate.hasKey(RedisKey.getLoginCodeKey(phone));
+    }
+
+    /**
      * 发送登录验证码
      *
      * @param phone 电话
      * @return boolean
      */
     public boolean sendLoginCode(String phone) {
+        if (isLogin(phone)) {
+            log.info("用户名【{}】 - 用户已登陆，无需发送登陆验证码", phone);
+            return false;
+        }
+
         // 这里使用默认值
         int code = CommonsUtils.getCode();
         // todo 此处为发送验证码代码
@@ -87,6 +103,11 @@ public class LoginService {
      * @return {@link Result}
      */
     public Result loginByPassword(String phone, String password) {
+        if (isLogin(phone)) {
+            log.info("用户名【{}】 - 用户已登陆", phone);
+            return Result.error(ErrorState.USER_HAS_LOGIN);
+        }
+
         // 1.获取Subject
         Subject subject = SecurityUtils.getSubject();
         // 2.封装用户数据
@@ -110,6 +131,11 @@ public class LoginService {
      * @return {@link Result}
      */
     public Result loginByCode(String phone, String code) {
+        if (isLogin(phone)) {
+            log.info("用户名【{}】 - 用户已登陆", phone);
+            return Result.error(ErrorState.USER_HAS_LOGIN);
+        }
+
         // 1.获取Subject
         Subject subject = SecurityUtils.getSubject();
         SysUser sysUser = userService.selectUserByPhone(phone);
